@@ -8,7 +8,8 @@ import EventsList from "../components/EventsList";
 export const loader = async () => {
   const response = await fetch("http://localhost:8080/events");
   if (!response.ok) {
-    return { isError: true, message: "에러남" };
+    // return { isError: true, message: "에러남" };
+    throw new Error();
   } else {
     return response;
   }
@@ -16,7 +17,7 @@ export const loader = async () => {
 
 const Events = () => {
   const data = useLoaderData();
-  if (data.isError) return <div>{data.message}</div>;
+  // if (data.isError) return <div>{data.message}</div>;
   const events = data.events;
 
   return <EventsList events={events} />;
