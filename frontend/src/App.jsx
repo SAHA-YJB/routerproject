@@ -31,6 +31,7 @@ const router = createBrowserRouter([
               }
             },
           },
+          // 하위 수준의 컴포넌트는 로더를 받을 수 있다
           { path: ":id", element: <EventDetail /> },
           { path: "new", element: <NewEvent /> },
           { path: ":id/edit", element: <EditEvent /> },
