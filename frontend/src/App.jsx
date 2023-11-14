@@ -2,7 +2,7 @@ import React from "react";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
-import Events from "./pages/Events";
+import Events, { loader as eventsLoader } from "./pages/Events";
 import EventDetail from "./pages/EventDetail";
 import NewEvent from "./pages/NewEvent";
 import EditEvent from "./pages/EditEvent";
@@ -22,14 +22,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <Events />,
-            loader: async () => {
-              const response = await fetch("http://localhost:8080/events");
-              if (!response.ok) {
-              } else {
-                const resData = await response.json();
-                return resData.events;
-              }
-            },
+            loader: eventsLoader,
           },
           // 하위 수준의 컴포넌트는 로더를 받을 수 있다
           { path: ":id", element: <EventDetail /> },
