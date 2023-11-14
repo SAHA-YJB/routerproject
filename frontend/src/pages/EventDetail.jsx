@@ -1,8 +1,10 @@
 import React from "react";
+
 import { Link, useParams } from "react-router-dom";
 
 const EventDetail = () => {
   const params = useParams();
+  console.log(params);
   return (
     <>
       <h1>EventDetail</h1>
