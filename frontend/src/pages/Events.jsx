@@ -9,7 +9,9 @@ export const loader = async () => {
   const response = await fetch("http://localhost:8080/events");
   if (!response.ok) {
     // return { isError: true, message: "에러남" };
-    throw new Error();
+    throw new Response(JSON.stringify({ message: "에러났다이" }), {
+      status: 500,
+    });
   } else {
     return response;
   }
