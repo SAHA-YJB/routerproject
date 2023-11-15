@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { json, useLoaderData } from "react-router-dom";
 import EventsList from "../components/EventsList";
 
 // 페이지가 이동되기 시작할때 로더 호출
@@ -9,9 +9,10 @@ export const loader = async () => {
   const response = await fetch("http://localhost:8080/events");
   if (!response.ok) {
     // return { isError: true, message: "에러남" };
-    throw new Response(JSON.stringify({ message: "에러났다이" }), {
-      status: 500,
-    });
+    // throw new Response(JSON.stringify({ message: "에러났다이" }), {
+    //   status: 500,
+    // });
+    return json({ message: "에러났다이" }, { status: 500 });
   } else {
     return response;
   }

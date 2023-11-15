@@ -8,7 +8,7 @@ const Error = () => {
   let message = "에러가 났어요!";
 
   if (error.status === 500) {
-    message = JSON.parse(error.data).message;
+    message = error.data.message;
   }
   if (error.status === 404) {
     title = "페이지를 찾을 수 없어요!";
