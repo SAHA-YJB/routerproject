@@ -1,6 +1,7 @@
 import React from "react";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { action as manipulateEventAction } from "./components/EventForm";
 import EditEvent from "./pages/EditEvent";
 import Error from "./pages/Error";
 import EventDetail, {
@@ -10,9 +11,8 @@ import EventDetail, {
 import Events, { loader as eventsLoader } from "./pages/Events";
 import EventsRoot from "./pages/EventsRoot";
 import Home from "./pages/Home";
-import NewEvent, { action as newEventAction } from "./pages/NewEvent";
+import NewEvent from "./pages/NewEvent";
 import RootLayout from "./pages/RootLayout";
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -40,10 +40,14 @@ const router = createBrowserRouter([
                 element: <EventDetail />, //이벤트디테일이 usRouteLoaderData를 통해 데이터를 받아온다
                 action: eventRemoveAction,
               },
-              { path: "edit", element: <EditEvent /> },
+              {
+                path: "edit",
+                element: <EditEvent />,
+                action: manipulateEventAction,
+              },
             ],
           },
-          { path: "new", element: <NewEvent />, action: newEventAction },
+          { path: "new", element: <NewEvent />, action: manipulateEventAction },
         ],
       },
     ],

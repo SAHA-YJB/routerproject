@@ -1,11 +1,47 @@
 import {
   Form,
+  json,
+  redirect,
   useActionData,
   useNavigate,
   useNavigation,
 } from "react-router-dom";
 
 import classes from "./EventForm.module.css";
+
+export const action = async ({ request, params }) => {
+  const method = request.method;
+  const data = await request.formData();
+
+  const eventData = {
+    title: data.get("title"),
+    image: data.get("image"),
+    description: data.get("description"),
+    date: data.get("date"),
+  };
+
+  let url = `http://localhost:8080/events`;
+
+  if (method === "PATCH") {
+    url += `/${params.id}`;
+  }
+
+  const response = await fetch(url, {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(eventData),
+  });
+
+  if (response.status === 422) {
+    return response;
+  }
+  if (!response.ok) {
+    throw json({ message: "뉴이벤트에러났다이" }, { status: 500 });
+  }
+  return redirect("/events");
+};
 
 function EventForm({ method, event }) {
   const data = useActionData();
@@ -18,7 +54,7 @@ function EventForm({ method, event }) {
   };
 
   return (
-    <Form method="post" className={classes.form}>
+    <Form method={method} className={classes.form}>
       {/* 액션에서 오는 데이터이다 422일 경우 오는 데이터 */}
       {data && data.errors && (
         <ul>
