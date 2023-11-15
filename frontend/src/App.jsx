@@ -1,14 +1,14 @@
 import React from "react";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home";
-import Events, { loader as eventsLoader } from "./pages/Events";
-import EventDetail, { loader as eventsDetailLoader } from "./pages/EventDetail";
-import NewEvent from "./pages/NewEvent";
 import EditEvent from "./pages/EditEvent";
-import RootLayout from "./pages/RootLayout";
-import EventsRoot from "./pages/EventsRoot";
 import Error from "./pages/Error";
+import EventDetail, { loader as eventDetailLoader } from "./pages/EventDetail";
+import Events, { loader as eventsLoader } from "./pages/Events";
+import EventsRoot from "./pages/EventsRoot";
+import Home from "./pages/Home";
+import NewEvent from "./pages/NewEvent";
+import RootLayout from "./pages/RootLayout";
 
 const router = createBrowserRouter([
   {
@@ -23,13 +23,23 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Events />,
+            element: <Events />, //이벤트가 useLoaderData를 통해 데이터를 받아온다
             loader: eventsLoader,
           },
           // 하위 수준의 컴포넌트는 로더를 받을 수 있다
-          { path: ":id", element: <EventDetail />, loader: eventsDetailLoader },
+          {
+            path: ":id",
+            id: "event-detail",
+            loader: eventDetailLoader,
+            children: [
+              {
+                index: true,
+                element: <EventDetail />, //이벤트디테일이 usRouteLoaderData를 통해 데이터를 받아온다
+              },
+              { path: "edit", element: <EditEvent /> },
+            ],
+          },
           { path: "new", element: <NewEvent /> },
-          { path: ":id/edit", element: <EditEvent /> },
         ],
       },
     ],

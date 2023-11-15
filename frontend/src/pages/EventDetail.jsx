@@ -1,6 +1,6 @@
 import React from "react";
 
-import { json, useLoaderData, useParams } from "react-router-dom";
+import { json, useRouteLoaderData } from "react-router-dom";
 import EventItem from "../components/EventItem";
 
 export const loader = async ({ request, params }) => {
@@ -13,10 +13,11 @@ export const loader = async ({ request, params }) => {
 };
 
 const EventDetail = () => {
-  const data = useLoaderData();
+  const data = useRouteLoaderData("event-detail");
+
   return (
     <>
-      <EventItem event={data.event} />
+      <EventItem event={data} />
     </>
   );
 };
