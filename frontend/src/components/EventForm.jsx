@@ -1,8 +1,14 @@
-import { Form, useNavigate, useNavigation } from "react-router-dom";
+import {
+  Form,
+  useActionData,
+  useNavigate,
+  useNavigation,
+} from "react-router-dom";
 
 import classes from "./EventForm.module.css";
 
 function EventForm({ method, event }) {
+  const data = useActionData();
   const navigate = useNavigate();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
@@ -13,6 +19,14 @@ function EventForm({ method, event }) {
 
   return (
     <Form method="post" className={classes.form}>
+      {/* 액션에서 오는 데이터이다 422일 경우 오는 데이터 */}
+      {data && data.errors && (
+        <ul>
+          {Object.values(data.errors).map((err) => (
+            <li key={err}>{err}</li>
+          ))}
+        </ul>
+      )}
       <p>
         <label htmlFor="title">Title</label>
         <input
