@@ -17,7 +17,7 @@ const EventDetail = () => {
 
   return (
     <>
-      <EventItem event={data} />
+      <EventItem event={data.event} />
     </>
   );
 };
