@@ -1,17 +1,22 @@
 import React from "react";
 
-import { Link, useParams } from "react-router-dom";
+import { json, useLoaderData, useParams } from "react-router-dom";
+import EventItem from "../components/EventItem";
+
+export const loader = async ({ request, params }) => {
+  const response = await fetch(`http://localhost:8080/events/${params.id}`);
+  if (!response.ok) {
+    return json({ message: "에러났다이" }, { status: 500 });
+  } else {
+    return response;
+  }
+};
 
 const EventDetail = () => {
-  const params = useParams();
-  console.log(params);
+  const data = useLoaderData();
   return (
     <>
-      <h1>EventDetail</h1>
-      <p>{params.id}</p>
-      <Link to=".." relative>
-        뒤로
-      </Link>
+      <EventItem event={data.event} />
     </>
   );
 };
