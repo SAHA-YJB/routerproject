@@ -3,7 +3,10 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import EditEvent from "./pages/EditEvent";
 import Error from "./pages/Error";
-import EventDetail, { loader as eventDetailLoader } from "./pages/EventDetail";
+import EventDetail, {
+  loader as eventDetailLoader,
+  action as eventRemoveAction,
+} from "./pages/EventDetail";
 import Events, { loader as eventsLoader } from "./pages/Events";
 import EventsRoot from "./pages/EventsRoot";
 import Home from "./pages/Home";
@@ -35,6 +38,7 @@ const router = createBrowserRouter([
               {
                 index: true,
                 element: <EventDetail />, //이벤트디테일이 usRouteLoaderData를 통해 데이터를 받아온다
+                action: eventRemoveAction,
               },
               { path: "edit", element: <EditEvent /> },
             ],

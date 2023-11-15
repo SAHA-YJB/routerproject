@@ -1,6 +1,6 @@
 import React from "react";
 
-import { json, useRouteLoaderData } from "react-router-dom";
+import { json, redirect, useRouteLoaderData } from "react-router-dom";
 import EventItem from "../components/EventItem";
 
 export const loader = async ({ request, params }) => {
@@ -12,14 +12,20 @@ export const loader = async ({ request, params }) => {
   }
 };
 
+export const action = async ({ params, request }) => {
+  const response = await fetch(`http://localhost:8080/events/${params.id}`, {
+    method: request.method,
+  });
+  if (!response.ok) {
+    throw json({ message: "디테일 삭제 에러났다이" }, { status: 500 });
+  }
+  return redirect("/events");
+};
+
 const EventDetail = () => {
   const data = useRouteLoaderData("event-detail");
 
-  return (
-    <>
-      <EventItem event={data.event} />
-    </>
-  );
+  return <EventItem event={data.event} />;
 };
 
 export default EventDetail;
